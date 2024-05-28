@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Graphs</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background: #bff3e09f;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-right: 10px;
+            width: 120px;
+        }
+
+        select {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            width: 100%;
+            font-size: large;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0aeb3b;
+        }
+
+        #graph-container {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="color: navy;">Stock Graphs</h1>
+    <div class="form-container">
+        <form id="stockForm">
+            <label for="ticker">Select Ticker:</label>
+            <select id="tickerSelect" name="ticker">
+                {% for ticker, name in ticker_options.items() %}
+                    <option value="{{ ticker }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        
+            <label for="graph_type">Select Graph Type:</label>
+            <select id="graphTypeSelect" name="graph_type">
+                <option value="candlestick">Candlestick</option>
+                <option value="linegraph">Line Graph</option>
+            </select>
+
+            <label for="period">Select Period:</label>
+            <select id="periodSelect" name="period">
+                <option value="1d">1 Day</option>
+                <option value="5d">5 Days</option>
+                <option value="1mo">1 Month</option>
+                <option value="3mo">3 Months</option>
+                <option value="6mo">6 Months</option>
+                <option value="1y">1 Year</option>
+                <option value="5y">5 Years</option>
+            </select>
+        
+            <button type="submit">Show Graph</button>
+        </form>        
+    </div>
+    
+    <div id="graph-container">
+        <!-- Graph will be displayed here -->
+    </div>
+</body>
+</html>
